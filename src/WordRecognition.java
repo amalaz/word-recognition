@@ -47,6 +47,7 @@ public class WordRecognition extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -87,6 +88,14 @@ public class WordRecognition extends javax.swing.JFrame {
         jTextArea1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jScrollPane1.setViewportView(jTextArea1);
 
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\ensan\\Desktop\\123.png")); // NOI18N
+        jLabel1.setToolTipText("");
+        jLabel1.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/3563a5_baa6c12c182a424285bf337511a3b261-mv2.png"))); // NOI18N
+        jLabel1.setMaximumSize(new java.awt.Dimension(100, 100));
+        jLabel1.setMinimumSize(new java.awt.Dimension(100, 100));
+        jLabel1.setPreferredSize(new java.awt.Dimension(100, 100));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -102,14 +111,18 @@ public class WordRecognition extends javax.swing.JFrame {
                         .addComponent(jButton2)
                         .addGap(12, 12, 12)
                         .addComponent(jButton3)))
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
@@ -130,8 +143,8 @@ public class WordRecognition extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             if (! jTextField1.getText().equals(word)) {
-                //word = jTextField1.getText();
-                //WordReco wr = new WordReco(word);
+                word = jTextField1.getText();
+                WordReco wr = new WordReco(word);
             }
             
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -156,8 +169,8 @@ public class WordRecognition extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             if (! jTextField1.getText().equals(word)) {
-                //word = jTextField1.getText();
-                //WordReco wr = new WordReco(word);
+                word = jTextField1.getText();
+                WordReco wr = new WordReco(word);
             }
             
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -192,7 +205,7 @@ public class WordRecognition extends javax.swing.JFrame {
             Document document =(Document) builder.parse(new File("output.xml"));
             Element rootElement = document.getDocumentElement();
             
-            wordStem("analysis", rootElement);
+            //wordStem("analysis", rootElement);
             
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(WordRecognition.class.getName()).log(Level.SEVERE, null, ex);
@@ -216,11 +229,9 @@ public class WordRecognition extends javax.swing.JFrame {
             for (int k = 0; k < subList.getLength(); k++) {
                 if (subList != null && subList.getLength() > 0 && subList.item(k).getNodeName().equals("tok")) {
                     //add to the label
-                    //System.out.println(subList.item(k).getAttributes().getNamedItem("form0").getNodeValue());
                     text = text + subList.item(k).getAttributes().getNamedItem("form0").getNodeValue() + "\n";
                 }           
             }
-            //text = text + "===";
         }
         
         jTextArea1.setText(text);
@@ -228,18 +239,20 @@ public class WordRecognition extends javax.swing.JFrame {
     
     protected void partOfSpeech(String tagName, Element element) {
         NodeList list = element.getElementsByTagName(tagName);
-        
+        String text = "";
         for (int i = 0; i < list.getLength(); i++) {
             NodeList subList = list.item(i).getChildNodes();
             
             for (int k = 0; k < subList.getLength(); k++) {
                 if (subList != null && subList.getLength() > 0 && subList.item(k).getNodeName().equals("morph_feature_set")) {
                     //add to the label
-                    System.out.print(subList.item(k).getAttributes().getNamedItem("diac").getNodeValue() +" : ");
-                    System.out.println(subList.item(k).getAttributes().getNamedItem("pos").getNodeValue());
+                    text = text + subList.item(k).getAttributes().getNamedItem("diac").getNodeValue() + "\n";
+                    text = text + subList.item(k).getAttributes().getNamedItem("pos").getNodeValue() + "\n";
                 }
             }
         }
+        jTextArea1.setText(text);
+  
     }
     
     protected void wordStem(String tagName, Element element) {
@@ -251,8 +264,8 @@ public class WordRecognition extends javax.swing.JFrame {
             for (int k = 0; k < subList.getLength(); k++) {
                 if (subList != null && subList.getLength() > 0 && subList.item(k).getNodeName().equals("morph_feature_set")) {
                     //add to the label
-                    System.out.print(subList.item(k).getAttributes().getNamedItem("diac").getNodeValue()+" : ");
-                    System.out.println(subList.item(k).getAttributes().getNamedItem("stem").getNodeValue());
+                    //System.out.print(subList.item(k).getAttributes().getNamedItem("diac").getNodeValue()+" : ");
+                    //System.out.println(subList.item(k).getAttributes().getNamedItem("stem").getNodeValue());
                 }           
             }
         }
@@ -298,6 +311,7 @@ public class WordRecognition extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
