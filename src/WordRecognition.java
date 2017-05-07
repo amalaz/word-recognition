@@ -257,7 +257,7 @@ public class WordRecognition extends javax.swing.JFrame {
     
     protected void wordStem(String tagName, Element element) {
         NodeList list = element.getElementsByTagName(tagName);
-        
+        String text ="";
         for (int i = 0; i < list.getLength(); i++) {
             NodeList subList = list.item(i).getChildNodes();
             
