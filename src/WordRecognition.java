@@ -19,7 +19,7 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author amal
+ * @author amal & reem
  */
 public class WordRecognition extends javax.swing.JFrame {
 
