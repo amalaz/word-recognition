@@ -196,8 +196,8 @@ public class WordRecognition extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             if (! jTextField1.getText().equals(word)) {
-                //word = jTextField1.getText();
-                //WordReco wr = new WordReco(word);
+                word = jTextField1.getText();
+                WordReco wr = new WordReco(word);
             }
             
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -205,7 +205,7 @@ public class WordRecognition extends javax.swing.JFrame {
             Document document =(Document) builder.parse(new File("output.xml"));
             Element rootElement = document.getDocumentElement();
             
-            //wordStem("analysis", rootElement);
+            wordStem("analysis", rootElement);
             
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(WordRecognition.class.getName()).log(Level.SEVERE, null, ex);
@@ -246,7 +246,7 @@ public class WordRecognition extends javax.swing.JFrame {
             for (int k = 0; k < subList.getLength(); k++) {
                 if (subList != null && subList.getLength() > 0 && subList.item(k).getNodeName().equals("morph_feature_set")) {
                     //add to the label
-                    text = text + subList.item(k).getAttributes().getNamedItem("diac").getNodeValue() + "\n";
+                    text = text + subList.item(k).getAttributes().getNamedItem("diac").getNodeValue() + " : ";
                     text = text + subList.item(k).getAttributes().getNamedItem("pos").getNodeValue() + "\n";
                 }
             }
@@ -264,11 +264,13 @@ public class WordRecognition extends javax.swing.JFrame {
             for (int k = 0; k < subList.getLength(); k++) {
                 if (subList != null && subList.getLength() > 0 && subList.item(k).getNodeName().equals("morph_feature_set")) {
                     //add to the label
-                    //System.out.print(subList.item(k).getAttributes().getNamedItem("diac").getNodeValue()+" : ");
-                    //System.out.println(subList.item(k).getAttributes().getNamedItem("stem").getNodeValue());
+		    text = text + subList.item(k).getAttributes().getNamedItem("diac").getNodeValue()+" : ";
+                    text = text + subList.item(k).getAttributes().getNamedItem("stem").getNodeValue()+"\n";
+
                 }           
             }
         }
+	jTextArea1.setText(text);
     }
     
     
