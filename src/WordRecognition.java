@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -20,7 +19,7 @@ import org.xml.sax.SAXException;
 /**
  *
  * @author amal & reem
- */
+ **/
 public class WordRecognition extends javax.swing.JFrame {
 
     /**
